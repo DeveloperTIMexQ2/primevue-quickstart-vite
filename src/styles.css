@@ -1,0 +1,95 @@
+body {
+  font-family: 'Roboto';
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 30px;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.p-inputtext.p-invalid.p-component {
+  border-color: #e24c4c;
+  border-width: 2px;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.p-menuitem-link {
+  padding: 0.5rem !important;
+}
+
+.p-menubar {
+  padding-top: 0;
+  padding-bottom: 0;
+  border-radius: 0;
+}
+
+.menubar-root {
+  font-weight: bold;
+  padding: 0 1rem;
+}
+
+.p-submenu-icon {
+  display: none;
+}
+
+.p-menuitem-link:not(.p-disabled):hover {
+  border-radius: 0;
+}
+
+.p-menuitem-link:focus {
+  box-shadow: none !important;
+}
+
+.form-row {
+  display: grid;
+  grid-gap: 5px;
+}
+
+.form-column-1 {
+  grid-template-columns: 1fr;
+}
+
+.form-column-2 {
+  grid-template-columns: 1fr 1fr;
+}
