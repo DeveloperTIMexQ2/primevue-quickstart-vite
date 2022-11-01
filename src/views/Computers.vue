@@ -1,25 +1,13 @@
 <script setup>
-import { ref } from 'vue';
 import ResponsibleForm from '../components/ResponsibleForm.vue';
 import ResponsibleDetail from '../components/ResponsibleDetail.vue';
 import ComputerForm from '../components/ComputerForm.vue';
 import ComputerTable from '../components/ComputerTable.vue';
+import EditComputerForm from '../components/EditComputerForm.vue';
+import { useDialogStore } from '../stores/dialog';
 
-const displayComputerForm = ref(false);
-const displayResponsibleForm = ref(false);
-const displayResponsibleDetail = ref(false);
+const { showComputerForm } = useDialogStore();
 
-const showComputerForm = () => displayComputerForm.value = true;
-
-const hideComputerForm = () => displayComputerForm.value = false;
-
-const showResponsibleForm = () => displayResponsibleForm.value = true;
-
-const hideResponsibleForm = () => displayResponsibleForm.value = false;
-
-const showResponsibleDetail = () => displayResponsibleDetail.value = true;
-
-const hideResponsibleDetail = () => displayResponsibleDetail.value = false;
 </script>
 
 <template>
@@ -27,13 +15,13 @@ const hideResponsibleDetail = () => displayResponsibleDetail.value = false;
     <h1>Computadoras</h1>
     <Button label="Nueva" icon="pi pi-plus" @click="showComputerForm" />
 
-    <ComputerTable @showResponsibleDetail="showResponsibleDetail" />
+    <ComputerTable />
   </div>
 
-  <ComputerForm :display="displayComputerForm" @hideComputerForm="hideComputerForm"
-    @showResponsibleForm="showResponsibleForm" />
-  <ResponsibleForm :display="displayResponsibleForm" @hideResponsibleForm="hideResponsibleForm" />
-  <ResponsibleDetail :display="displayResponsibleDetail" @hideResponsibleDetail="hideResponsibleDetail" />
+  <ComputerForm />
+  <ResponsibleForm />
+  <ResponsibleDetail />
+  <EditComputerForm />
 
   <!-- <div class="form-row form-column-1">
     <div class="field">

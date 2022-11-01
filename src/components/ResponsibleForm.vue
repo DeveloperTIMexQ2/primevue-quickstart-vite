@@ -4,15 +4,20 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import { useResponsibleStore } from '../stores/responsible';
 import { useToast } from 'primevue/usetoast';
+import { useDialogStore } from '../stores/dialog';
+import { storeToRefs } from 'pinia';
 
-const props = defineProps({
-  display: Boolean,
-});
+// const props = defineProps({
+//   display: Boolean,
+// });
 
-const emit = defineEmits(['hideResponsibleForm']);
+// const emit = defineEmits(['hideResponsibleForm']);
 const submitted = ref(false);
 const toast = useToast();
 const store = useResponsibleStore();
+const dialogStore = useDialogStore();
+const { displayResponsibleForm } = storeToRefs(dialogStore);
+const { hideResponsibleForm } = dialogStore;
 const formState = reactive({
   employee_number: "",
   phone_number: "",
@@ -33,7 +38,7 @@ const rules = {
 }
 const v$ = useVuelidate(rules, formState);
 
-const hideResponsibleForm = () => emit('hideResponsibleForm');
+// const hideResponsibleForm = () => emit('hideResponsibleForm');
 
 const handleSubmit = async (isFormValid) => {
   submitted.value = true;
@@ -61,7 +66,7 @@ const handleSubmit = async (isFormValid) => {
 </script>
 
 <template>
-  <Dialog header="Registro de nuevo responsable" v-model:visible="display"
+  <Dialog header="Registro de nuevo responsable" v-model:visible="displayResponsibleForm"
     :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '45vw' }" @hide="hideResponsibleForm">
     <form @submit.prevent="handleSubmit(!v$.$invalid)">
       <div class="form-row form-column-2">
@@ -104,7 +109,7 @@ const handleSubmit = async (isFormValid) => {
       </div>
     </form>
     <template #footer>
-      <Button label="Cancelar" icon="pi pi-times" type="button" @click="display = !display" class="p-button-text" />
+      <Button label="Cancelar" icon="pi pi-times" type="button" @click="hideResponsibleForm" class="p-button-text" />
       <Button label="Guardar" icon="pi pi-save" @click="handleSubmit(!v$.$invalid)" />
     </template>
   </Dialog>

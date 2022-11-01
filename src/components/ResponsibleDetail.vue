@@ -3,17 +3,21 @@ import { ref, onMounted } from 'vue';
 import { useResponsibleStore } from '../stores/responsible';
 import { useToast } from 'primevue/usetoast';
 import { storeToRefs } from 'pinia';
+import { useDialogStore } from '../stores/dialog';
 
-const props = defineProps({
-  display: Boolean,
-});
+// const props = defineProps({
+//   display: Boolean,
+// });
 
-const emit = defineEmits(['hideResponsibleDetail']);
+// const emit = defineEmits(['hideResponsibleDetail']);
 const toast = useToast();
 const store = useResponsibleStore();
+const dialogStore = useDialogStore();
+const { displayResponsibleDetail } = storeToRefs(dialogStore);
+const { hideResponsibleDetail } = dialogStore;
 const { current_responsible } = storeToRefs(store);
 
-const hideResponsibleDetail = () => emit('hideResponsibleDetail');
+// const hideResponsibleDetail = () => emit('hideResponsibleDetail');
 
 onMounted(async () => {
   // responsible.value = await store.getResponsible(props.id);
@@ -22,7 +26,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Dialog :header="current_responsible ? current_responsible.employee_name : 'No one'" v-model:visible="display"
+  <Dialog :header="current_responsible ? current_responsible.employee_name : 'No one'" v-model:visible="displayResponsibleDetail"
     :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '45vw' }" @hide="hideResponsibleDetail">
     
     <div class="form-row form-column-2">

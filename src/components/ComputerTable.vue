@@ -3,10 +3,12 @@ import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useComputerStore } from '../stores/computer';
 import { useResponsibleStore } from '../stores/responsible';
+import { useDialogStore } from '../stores/dialog';
 
-const emit = defineEmits(['showResponsibleDetail']);
+// const emit = defineEmits(['showResponsibleDetail', 'showEditComputerForm']);
 const store = useComputerStore();
 const responsibleStore = useResponsibleStore();
+const { showResponsibleDetail, showEditComputerForm } = useDialogStore();
 const { computers } = storeToRefs(store);
 
 onMounted(() => {
@@ -15,7 +17,13 @@ onMounted(() => {
 
 const selectResponsible = async (id) => {
   await responsibleStore.setResponsible(id);
-  emit('showResponsibleDetail');
+  // emit('showResponsibleDetail');
+  showResponsibleDetail();
+}
+
+const selectComputer = async () => {
+  // emit('showEditComputerForm');
+  showEditComputerForm();
 }
 
 const formatDate = (timesamp) => {
@@ -46,6 +54,17 @@ const formatDate = (timesamp) => {
     <Column field="invoice_number" header="# Factura"></Column>
     <Column field="supplier" header="Proveedor"></Column>
     <Column field="computer_status" header="Estatus"></Column>
+    <Column headerStyle="width: 4rem; text-align: center"
+      bodyStyle="text-align: center; overflow: visible; display: flex;">
+      <template #body>
+        <Button type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info m-1 button-icon-table"
+          title="Editar registro" @click="selectComputer"></Button>
+        <Button type="button" icon="pi pi-file-pdf" class="p-button-rounded p-button-secondary m-1 button-icon-table"
+          title="Carta responsiva"></Button>
+        <Button type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger m-1 button-icon-table"
+          title="Eliminar registro"></Button>
+      </template>
+    </Column>
   </DataTable>
 </template>
 

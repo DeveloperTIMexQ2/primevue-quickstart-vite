@@ -12,7 +12,7 @@ import { useDialogStore } from '../stores/dialog';
 //   display: Boolean
 // });
 
-// const emit = defineEmits(['showResponsibleForm', 'hideResponsibleForm', 'hideComputerForm']);
+// const emit = defineEmits(['hideEditComputerForm', 'showResponsibleForm']);
 const submitted = ref(false);
 const filteredResponsibles = ref();
 const toast = useToast();
@@ -20,8 +20,8 @@ const responsibleStore = useResponsibleStore();
 const computerStore = useComputerStore();
 const dialogStore = useDialogStore();
 const { responsibles } = storeToRefs(responsibleStore);
-const { displayComputerForm } = storeToRefs(dialogStore);
-const { hideComputerForm, showResponsibleForm } = dialogStore;
+const { displayEditComputerForm } = storeToRefs(dialogStore);
+const { showResponsibleForm, hideEditComputerForm } = dialogStore;
 let selected_file = null;
 const computer_types = ref([
   { name: 'Laptop', code: 'Laptop' },
@@ -67,9 +67,9 @@ onMounted(() => {
   responsibleStore.getResponsibles();
 })
 
-// const showResponsibleForm = () => emit('showResponsibleForm');
+// const hideEditComputerForm = () => emit('hideEditComputerForm');
 
-// const hideComputerForm = () => emit('hideComputerForm');
+// const showResponsibleForm = () => emit('showResponsibleForm');
 
 const searchResponsible = (event) => {
   setTimeout(() => {
@@ -112,13 +112,13 @@ const handleSubmit = async (isFormValid) => {
   formState.responsible = '';
   submitted.value = false;
   selected_file = null;
-  hideComputerForm();
+  hideEditComputerForm();
 };
 </script>
 
 <template>
-  <Dialog header="Nuevo Registro" v-model:visible="displayComputerForm" :breakpoints="{'960px': '75vw', '640px': '90vw'}"
-    :style="{width: '50vw'}" @hide="hideComputerForm">
+  <Dialog header="Editar Registro" v-model:visible="displayEditComputerForm" :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+    :style="{width: '50vw'}" @hide="hideEditComputerForm">
     <form @submit.prevent="handleSubmit(!v$.$invalid)">
       <div class="form-row form-column-1">
         <div class="field">
@@ -196,7 +196,7 @@ const handleSubmit = async (isFormValid) => {
       </div>
     </form>
     <template #footer>
-      <Button label="Cancelar" icon="pi pi-times" type="button" @click="hideComputerForm" class="p-button-text" />
+      <Button label="Cancelar" icon="pi pi-times" type="button" @click="hideEditComputerForm" class="p-button-text" />
       <Button label="Guardar" icon="pi pi-save" @click="handleSubmit(!v$.$invalid)" />
     </template>
   </Dialog>
