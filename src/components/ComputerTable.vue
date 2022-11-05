@@ -21,13 +21,14 @@ const selectResponsible = async (id) => {
   showResponsibleDetail();
 }
 
-const selectComputer = async () => {
+const selectComputer = async (id) => {
+  await store.setComputer(id);
   // emit('showEditComputerForm');
   showEditComputerForm();
 }
 
-const formatDate = (timesamp) => {
-  if (timesamp) return new Intl.DateTimeFormat(['ban', 'id']).format(timesamp.toDate());
+const formatDate = (timestamp) => {
+  if (timestamp) return new Intl.DateTimeFormat(['ban', 'id']).format(timestamp.toDate());
 
   return 'Sin fecha';
 }
@@ -56,9 +57,11 @@ const formatDate = (timesamp) => {
     <Column field="computer_status" header="Estatus"></Column>
     <Column headerStyle="width: 4rem; text-align: center"
       bodyStyle="text-align: center; overflow: visible; display: flex;">
-      <template #body>
+      <template #body="slotProps">
+        <Button type="button" icon="pi pi-info-circle" class="p-button-rounded m-1 button-icon-table"
+          title="Detalle registro"></Button>
         <Button type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info m-1 button-icon-table"
-          title="Editar registro" @click="selectComputer"></Button>
+          title="Editar registro" @click="selectComputer(slotProps.data.id)"></Button>
         <Button type="button" icon="pi pi-file-pdf" class="p-button-rounded p-button-secondary m-1 button-icon-table"
           title="Carta responsiva"></Button>
         <Button type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger m-1 button-icon-table"

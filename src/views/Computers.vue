@@ -5,8 +5,12 @@ import ComputerForm from '../components/ComputerForm.vue';
 import ComputerTable from '../components/ComputerTable.vue';
 import EditComputerForm from '../components/EditComputerForm.vue';
 import { useDialogStore } from '../stores/dialog';
+import { useComputerStore } from '../stores/computer';
+import { storeToRefs } from 'pinia';
 
 const { showComputerForm } = useDialogStore();
+const computerStore = useComputerStore();
+const { current_computer } = storeToRefs(computerStore);
 
 </script>
 
@@ -21,12 +25,5 @@ const { showComputerForm } = useDialogStore();
   <ComputerForm />
   <ResponsibleForm />
   <ResponsibleDetail />
-  <EditComputerForm />
-
-  <!-- <div class="form-row form-column-1">
-    <div class="field">
-      <Calendar class="w-full" inputId="icon" autocomplete="off" :showIcon="true"
-        placeholder="Fecha de entrega" />
-    </div>
-  </div> -->
+  <EditComputerForm v-if="current_computer" />
 </template>

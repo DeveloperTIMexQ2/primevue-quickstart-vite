@@ -29,12 +29,12 @@ const formState = reactive({
 });
 const rules = {
   employee_number: { required, minLength: minLength(5) },
-  phone_number: {},
+  phone_number: { required },
   employee_name: { required },
-  employee_position: {},
-  employee_email: {},
-  employee_area: {},
-  employee_branch: {},
+  employee_position: { required },
+  employee_email: { required },
+  employee_area: { required },
+  employee_branch: { required },
 }
 const v$ = useVuelidate(rules, formState);
 
@@ -49,7 +49,7 @@ const handleSubmit = async (isFormValid) => {
 
   const res = await store.addResponsible(formState);
 
-  if(!res) {
+  if (!res) {
     toast.add({ severity: 'success', summary: 'Exito!', detail: 'responsable agregado', life: 3000 });
   }
 
@@ -79,7 +79,11 @@ const handleSubmit = async (isFormValid) => {
           </small>
         </div>
         <div class="field">
-          <InputMask class="w-full" v-model="v$.phone_number.$model" mask="999-999-9999" placeholder="# Télefono" />
+          <InputMask class="w-full" v-model="v$.phone_number.$model" mask="999-999-9999" placeholder="# Télefono"
+            :class="{ 'p-invalid': v$.phone_number.$invalid && submitted }" />
+          <small v-if="(v$.phone_number.$invalid && submitted) || v$.phone_number.$pending.$response" class="p-error">
+            {{ v$.phone_number.required.$message.replace('Value', '# Télefono') }}
+          </small>
         </div>
       </div>
       <div class="form-row form-column-1">
@@ -93,18 +97,34 @@ const handleSubmit = async (isFormValid) => {
       </div>
       <div class="form-row form-column-2">
         <div class="field">
-          <InputText class="w-full" v-model="v$.employee_position.$model" placeholder="Puesto del trabajador" />
+          <InputText class="w-full" v-model="v$.employee_position.$model" placeholder="Puesto del trabajador"
+            :class="{ 'p-invalid': v$.employee_position.$invalid && submitted }" />
+          <small v-if="(v$.employee_position.$invalid && submitted) || v$.employee_position.$pending.$response" class="p-error">
+            {{ v$.employee_position.required.$message.replace('Value', 'Puesto') }}
+          </small>
         </div>
         <div class="field">
-          <InputText class="w-full" v-model="v$.employee_email.$model" placeholder="Correo eléctronico" />
+          <InputText class="w-full" v-model="v$.employee_email.$model" placeholder="Correo eléctronico"
+            :class="{ 'p-invalid': v$.employee_email.$invalid && submitted }" />
+          <small v-if="(v$.employee_email.$invalid && submitted) || v$.employee_email.$pending.$response" class="p-error">
+            {{ v$.employee_email.required.$message.replace('Value', 'Correo') }}
+          </small>
         </div>
       </div>
       <div class="form-row form-column-2">
         <div class="field">
-          <InputText class="w-full" v-model="v$.employee_branch.$model" placeholder="Sucursal del trabajador" />
+          <InputText class="w-full" v-model="v$.employee_branch.$model" placeholder="Sucursal del trabajador"
+            :class="{ 'p-invalid': v$.employee_branch.$invalid && submitted }" />
+          <small v-if="(v$.employee_branch.$invalid && submitted) || v$.employee_branch.$pending.$response" class="p-error">
+            {{ v$.employee_branch.required.$message.replace('Value', 'Sucursal') }}
+          </small>
         </div>
         <div class="field">
-          <InputText class="w-full" v-model="v$.employee_area.$model" placeholder="Planta / Departamento" />
+          <InputText class="w-full" v-model="v$.employee_area.$model" placeholder="Planta / Departamento"
+            :class="{ 'p-invalid': v$.employee_area.$invalid && submitted }" />
+          <small v-if="(v$.employee_area.$invalid && submitted) || v$.employee_area.$pending.$response" class="p-error">
+            {{ v$.employee_area.required.$message.replace('Value', 'Planta / Departamento') }}
+          </small>
         </div>
       </div>
     </form>

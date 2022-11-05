@@ -21,6 +21,7 @@ const computerStore = useComputerStore();
 const dialogStore = useDialogStore();
 const { responsibles } = storeToRefs(responsibleStore);
 const { displayEditComputerForm } = storeToRefs(dialogStore);
+const { current_computer } = storeToRefs(computerStore);
 const { showResponsibleForm, hideEditComputerForm } = dialogStore;
 let selected_file = null;
 const computer_types = ref([
@@ -34,17 +35,17 @@ const computer_statuses = ref([
   { name: 'En soporte', code: 'En soporte' },
 ]);
 const formState = reactive({
-  computer_type: "",
-  computer_status: "",
-  computer_brand: "",
-  computer_model: "",
-  serial_number: "",
-  product_number: "",
-  invoice_number: "",
-  invoice_date: "",
-  supplier: "",
-  comments: "",
-  responsible: "",
+  computer_type: '',
+  computer_status: '',
+  computer_brand: '',
+  computer_model: '',
+  serial_number: '',
+  product_number: '',
+  invoice_number: '',
+  invoice_date: '',
+  supplier: '',
+  comments: '',
+  responsible: '',
 });
 
 const rules = {
@@ -65,6 +66,17 @@ const v$ = useVuelidate(rules, formState);
 
 onMounted(() => {
   responsibleStore.getResponsibles();
+  formState.computer_type = current_computer.value.computer_type;
+  formState.computer_status = current_computer.value.computer_status;
+  formState.computer_brand = current_computer.value.computer_brand;
+  formState.computer_model = current_computer.value.computer_model;
+  formState.serial_number = current_computer.value.serial_number;
+  formState.product_number = current_computer.value.product_number;
+  formState.invoice_number = current_computer.value.invoice_number;
+  formState.invoice_date = current_computer.value.invoice_date;
+  formState.supplier = current_computer.value.supplier;
+  formState.comments = current_computer.value.comments;
+  formState.responsible = current_computer.value.responsible;
 })
 
 // const hideEditComputerForm = () => emit('hideEditComputerForm');
